@@ -5,11 +5,13 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.database.sqlite.SQLiteStatement
 import android.provider.BaseColumns
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.sql.Date
+import java.sql.PreparedStatement
 
 private const val TAG = "DatabaseManagement"
 class databaseManagment(val context: Context) : ScrollingActivity() {
@@ -21,10 +23,13 @@ class databaseManagment(val context: Context) : ScrollingActivity() {
     }
 
     fun addtodatabase(title: String, description: String){
-        val sql = "INSERT INTO todo (title, description) VALUES ('$title', '$description')"
+        val stmt: SQLiteStatement? = database.compileStatement("INSERT INTO todo (title, description) VALUES (?, ?)")
+        stmt!!.bindString(1,title)
+        stmt.bindString(2,description)
+
         Log.e(TAG, "********************************** Inserting database and ID is $title *************************************")
         if (title != ""){
-            database.execSQL(sql)
+            stmt.executeInsert()
         }else{
             Toast.makeText(context,"Nothing to add", Toast.LENGTH_SHORT).show()
         }
@@ -38,8 +43,10 @@ class databaseManagment(val context: Context) : ScrollingActivity() {
 
     fun updateDatabase(id: Int, title: String, description: String){
         Log.e(TAG, "********************************** Updating database and ID is $id *************************************")
-        val sql = "UPDATE todo SET title='$title', description='$description' WHERE _id = $id"
-        database.execSQL(sql)
+        val stmt: SQLiteStatement? = database.compileStatement("UPDATE todo SET title=?, description=? WHERE _id = $id")
+        stmt!!.bindString(1,title)
+        stmt.bindString(2, description)
+        stmt.execute()
     }
 
     fun datagetter(): List<String>{

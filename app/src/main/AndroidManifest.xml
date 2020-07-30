@@ -13,7 +13,8 @@
         </activity>
 
         <activity
-            android:name=".activtity_todo"/>
+            android:name=".activtity_todo"
+            android:label=""/>
 <!--            android:theme="@style/AppTheme.NoActionBar" />-->
 
         <activity

@@ -9,6 +9,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import java.sql.PreparedStatement
 
 
 private const val TAG = "activity"
@@ -45,7 +46,6 @@ class activtity_todo : AppCompatActivity() {
             val database = databaseManagment(baseContext)
 
             if (haveTo.equals("Insert")) {
-                Log.e(TAG,"Data to Insert")
                 database.addtodatabase(title_is, description_is)
             }else if (haveTo.equals("Update")){
                 Log.e(TAG, "data to Update")
